@@ -1497,9 +1497,11 @@ function doPost(e) {
     const STORAGE_KEY = 'shopee_1688_tracker_v2';
     const CLOUD_CFG_KEY = 'shopee_cloud_cfg_v1';
 
+    const DEFAULT_CLOUD_URL = 'https://script.google.com/macros/s/AKfycbwq_7nb8w-hrb5y_Dr0_8CwuJ2_7IQZeIsEH2T2yaMASY8ex6efExNA5dZo1lq3nAPLqg/exec';
+
     let cloudCfg = {
       provider: 'apps_script',
-      url: '',
+      url: DEFAULT_CLOUD_URL,
       token: '',
       autoSync: true,
       lastSyncedAt: ''
@@ -3283,6 +3285,7 @@ function doPost(e) {
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed === 'object') {
           cloudCfg = { ...cloudCfg, ...parsed };
+          if (!cloudCfg.url) cloudCfg.url = DEFAULT_CLOUD_URL;
         }
       } catch (e) {}
     }
