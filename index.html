@@ -95,15 +95,10 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             <span>Nhập đơn Shopee</span>
           </button>
-          <button id="btnCloudSync" type="button" title="Đồng bộ dữ liệu đám mây giữa máy tính & điện thoại" class="relative inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 transition">
+          <button id="btnCloudSync" type="button" title="Đồng bộ dữ liệu đám mây (nhấn Ctrl+S để lưu nhanh lên đám mây)" class="relative inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
             <span class="hidden sm:inline">Đám mây</span>
             <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
-          </button>
-          <button id="btnBackupJson" type="button" title="Lưu dữ liệu (Ctrl+S) — mở bảng chọn đường dẫn lưu file" class="relative inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 shadow-xs transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-            <span>Lưu</span>
-            <span id="unsavedDot" class="hidden w-2 h-2 rounded-full bg-amber-300 ring-2 ring-emerald-700"></span>
           </button>
           <button id="btnRestoreJson" type="button" title="Mở file dữ liệu (.json) để nạp và liên kết ghi đè khi bấm Lưu" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/></svg>
@@ -1540,7 +1535,7 @@ function doPost(e) {
       const timeEl = document.getElementById('lastSavedTime');
       if (bar && label && linkedFileHandle) {
         bar.classList.remove('hidden');
-        label.textContent = `File đang làm việc: ${linkedFileHandle.name} (bấm Lưu hoặc Ctrl+S để chọn đường dẫn lưu / ghi đè)`;
+        label.textContent = `Đã nạp từ file: ${linkedFileHandle.name} (nhấn Ctrl+S để lưu đồng bộ lên Đám mây)`;
         if (savedTimeStr && timeEl) {
           timeEl.textContent = `Lần lưu cuối: ${savedTimeStr}`;
         }
@@ -3630,8 +3625,7 @@ function doPost(e) {
         ta.remove();
       }
 
-      // Save (auto-overwrite) & Open JSON
-      document.getElementById('btnBackupJson').addEventListener('click', backupJsonData);
+      // Open JSON & Ctrl+S quick save to Cloud
       document.getElementById('btnRestoreJson').addEventListener('click', openJsonDataFile);
       document.getElementById('inputRestoreJson').addEventListener('change', (e) => {
         const file = e.target.files && e.target.files[0];
@@ -3640,7 +3634,8 @@ function doPost(e) {
       window.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
           e.preventDefault();
-          backupJsonData();
+          saveState(false);
+          pushToCloud(false);
         }
       });
 
