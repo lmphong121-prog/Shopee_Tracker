@@ -377,7 +377,7 @@
 
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1" for="shVoucher">Voucher Shop (₫)</label>
-              <input id="shVoucher" type="number" min="0" step="1000" value="0" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl num focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+              <input id="shVoucher" type="number" min="0" step="500" value="0" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl num focus:ring-2 focus:ring-orange-500 focus:outline-none" />
             </div>
           </div>
 
@@ -398,80 +398,38 @@
             <p id="shStockHint" class="text-[11px] text-slate-500 pt-0.5"></p>
           </div>
 
-          <!-- Shipping & Value-Added Services (matching Shopee Revenue Detail) -->
+          <!-- Consolidated Payment Info matching Shopee Order Details -->
           <div class="pt-2 border-t border-slate-100">
-            <p class="text-xs font-semibold text-slate-700 mb-2">Vận chuyển & Dịch vụ giá trị gia tăng (theo chi tiết doanh thu Shopee)</p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+              <p class="text-xs font-semibold text-slate-700">Thông tin thanh toán & Phụ phí (nhập trực tiếp theo đơn hàng Shopee)</p>
+              <button id="btnAutoEstimateFees" type="button" class="text-[11px] font-semibold text-orange-600 hover:text-orange-700 bg-orange-50 px-2.5 py-1 rounded-lg transition">
+                Tự ước tính từ biểu phí mặc định
+              </button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               <div>
-                <label class="block text-[11px] text-slate-500 mb-1" for="shBuyerShip">Phí vận chuyển Người mua trả (₫)</label>
-                <input id="shBuyerShip" type="number" step="500" min="0" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
+                <label class="block text-[11px] text-slate-500 mb-1" for="shShipNoSubsidy">Phí vận chuyển (không tính trợ giá) (₫)</label>
+                <input id="shShipNoSubsidy" type="number" step="1" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num focus:ring-2 focus:ring-orange-500 focus:outline-none" />
               </div>
               <div>
-                <label class="block text-[11px] text-slate-500 mb-1" for="shEstShip">Phí vận chuyển ước tính trừ đi (₫)</label>
-                <input id="shEstShip" type="number" step="500" min="0" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
+                <label class="block text-[11px] text-slate-500 mb-1" for="shTxFeeVnd">Phí giao dịch (₫ — số tiền bị trừ)</label>
+                <input id="shTxFeeVnd" type="number" step="1" min="0" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num text-rose-700 font-medium focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-500 mb-1" for="shTaxVnd">Tổng tiền thuế (₫ — số tiền bị trừ)</label>
+                <input id="shTaxVnd" type="number" step="1" min="0" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num text-rose-700 font-medium focus:ring-2 focus:ring-orange-500 focus:outline-none" />
               </div>
               <div>
                 <label class="block text-[11px] text-slate-500 mb-1" for="shVasFee">Tổng phụ DV GTGT cho người mua (₫)</label>
-                <input id="shVasFee" type="number" step="500" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Per-order fee & tax overrides with live VND readouts -->
-          <div class="pt-2 border-t border-slate-100">
-            <p class="text-xs font-semibold text-slate-700 mb-2">Phụ phí & Thuế Shopee (nhập % sẽ hiện ngay số tiền tương ứng)</p>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div>
-                <div class="flex items-center justify-between gap-1 mb-1">
-                  <label class="text-[11px] text-slate-500" for="shFixedFee">Phí cố định (%)</label>
-                  <span id="shFixedFeeAmt" class="text-[11px] font-bold text-rose-600 num">0 ₫</span>
-                </div>
-                <input id="shFixedFee" type="number" step="0.1" min="0" max="50" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
+                <input id="shVasFee" type="number" step="1" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num focus:ring-2 focus:ring-orange-500 focus:outline-none" />
               </div>
               <div>
-                <div class="flex items-center justify-between gap-1 mb-1">
-                  <label class="text-[11px] text-slate-500" for="shServiceFee">Phí dịch vụ (%)</label>
-                  <span id="shServiceFeeAmt" class="text-[11px] font-bold text-rose-600 num">0 ₫</span>
-                </div>
-                <input id="shServiceFee" type="number" step="0.1" min="0" max="50" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
+                <label class="block text-[11px] text-slate-500 mb-1" for="shAdjustment">Điều chỉnh (₫ — nhập âm nếu trừ)</label>
+                <input id="shAdjustment" type="number" step="1" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num focus:ring-2 focus:ring-orange-500 focus:outline-none" />
               </div>
               <div>
-                <div class="flex items-center justify-between gap-1 mb-1">
-                  <label class="text-[11px] text-slate-500" for="shInfraFee">Phí DV / Hạ tầng (₫)</label>
-                </div>
-                <input id="shInfraFee" type="number" step="500" min="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
-              </div>
-              <div>
-                <div class="flex items-center justify-between gap-1 mb-1">
-                  <label class="text-[11px] text-slate-500" for="shTxFee">Phí xử lý GD (%)</label>
-                  <span id="shTxFeeAmt" class="text-[11px] font-bold text-rose-600 num">0 ₫</span>
-                </div>
-                <input id="shTxFee" type="number" step="0.1" min="0" max="50" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
-              </div>
-              <div>
-                <div class="flex items-center justify-between gap-1 mb-1">
-                  <label class="text-[11px] text-slate-500" for="shVatPct">Thuế GTGT (%)</label>
-                  <span id="shVatAmt" class="text-[11px] font-bold text-rose-600 num">0 ₫</span>
-                </div>
-                <input id="shVatPct" type="number" step="0.1" min="0" max="50" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
-              </div>
-              <div>
-                <div class="flex items-center justify-between gap-1 mb-1">
-                  <label class="text-[11px] text-slate-500" for="shPitPct">Thuế TNCN (%)</label>
-                  <span id="shPitAmt" class="text-[11px] font-bold text-rose-600 num">0 ₫</span>
-                </div>
-                <input id="shPitPct" type="number" step="0.1" min="0" max="50" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
-              </div>
-              <div>
-                <div class="flex items-center justify-between gap-1 mb-1">
-                  <label class="text-[11px] text-slate-500" for="shSubsidy">Trợ giá (₫)</label>
-                  <button id="btnShSubsidySign" type="button" data-sign="1" title="Bấm để chuyển giữa + Cộng (Shopee trợ giá) và − Trừ (Shop chịu trợ giá)" class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition">+ Cộng</button>
-                </div>
-                <input id="shSubsidy" type="number" step="500" min="0" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
-              </div>
-              <div>
-                <label class="block text-[11px] text-slate-500 mb-1" for="shOtherFee">Đóng gói / khác (₫/đơn)</label>
-                <input id="shOtherFee" type="number" step="500" min="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num" />
+                <label class="block text-[11px] text-slate-500 mb-1" for="shOtherFee">Chi phí đóng gói / khác ngoài sàn (₫/đơn)</label>
+                <input id="shOtherFee" type="number" step="500" min="0" value="0" class="w-full px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg num focus:ring-2 focus:ring-orange-500 focus:outline-none" />
               </div>
             </div>
           </div>
@@ -493,33 +451,37 @@
 
             <div class="space-y-2 text-sm">
               <div class="flex justify-between text-slate-300">
-                <span>Tổng tiền sản phẩm (sau voucher)</span>
+                <span>Tổng tiền sản phẩm</span>
                 <span id="prevGross" class="font-semibold text-white num">0 ₫</span>
               </div>
-              <div class="flex justify-between text-slate-300 text-xs">
-                <span>Tổng phí vận chuyển ước tính</span>
+              <div class="flex justify-between text-slate-400 text-xs">
+                <span>Phí vận chuyển (không tính trợ giá)</span>
                 <span id="prevShippingNet" class="text-sky-300 num">0 ₫</span>
               </div>
               <div class="flex justify-between text-slate-400 text-xs">
-                <span>Phụ phí (Cố định + DV + Xử lý GD)</span>
+                <span>Phí giao dịch</span>
                 <span id="prevPlatformFee" class="text-rose-300 num">0 ₫</span>
               </div>
               <div class="flex justify-between text-slate-400 text-xs">
-                <span>Thuế (GTGT + TNCN)</span>
+                <span>Tổng tiền thuế</span>
                 <span id="prevTax" class="text-rose-300 num">0 ₫</span>
               </div>
               <div class="flex justify-between text-slate-400 text-xs">
-                <span>Trợ giá</span>
-                <span id="prevSubsidy" class="text-emerald-300 num">0 ₫</span>
+                <span>Tổng phụ DV GTGT người mua</span>
+                <span id="prevVas" class="text-slate-300 num">0 ₫</span>
               </div>
               <div class="flex justify-between text-slate-400 text-xs">
-                <span>DV GTGT người mua / Đóng gói khác</span>
-                <span id="prevFixedPerOrder" class="text-slate-300 num">0 ₫</span>
+                <span>Điều chỉnh</span>
+                <span id="prevAdjustment" class="text-emerald-300 num">0 ₫</span>
               </div>
 
               <div class="border-t border-slate-700 my-2 pt-2.5 flex justify-between">
-                <span class="font-semibold text-orange-300">Doanh thu đơn hàng ước tính</span>
+                <span class="font-semibold text-orange-300">Doanh thu sau điều chỉnh</span>
                 <span id="prevNetRev" class="font-bold text-orange-300 num">0 ₫</span>
+              </div>
+              <div class="flex justify-between text-slate-400 text-xs">
+                <span>− Đóng gói / khác ngoài sàn</span>
+                <span id="prevOtherCost" class="text-rose-300 num">0 ₫</span>
               </div>
               <div class="flex justify-between text-slate-300">
                 <span>− Giá vốn mua hàng / DIY</span>
@@ -719,7 +681,7 @@
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1" for="diySellPrice">Giá bán Shopee (₫/bộ)</label>
-              <input id="diySellPrice" type="number" min="0" step="1000" value="250000" required class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl num focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+              <input id="diySellPrice" type="number" min="0" step="500" value="250000" required class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl num focus:ring-2 focus:ring-orange-500 focus:outline-none" />
             </div>
             <div class="sm:col-span-3">
               <label class="block text-xs font-semibold text-slate-700 mb-1" for="diyNote">Ghi chú sản phẩm (tùy chọn)</label>
@@ -1525,11 +1487,6 @@ function doPost(e) {
     let hasUnsavedChanges = false;
 
     function updateSaveStatusUI(savedTimeStr = null) {
-      const dot = document.getElementById('unsavedDot');
-      if (dot) {
-        if (hasUnsavedChanges) dot.classList.remove('hidden');
-        else dot.classList.add('hidden');
-      }
       const bar = document.getElementById('linkedFileBar');
       const label = document.getElementById('linkedFileLabel');
       const timeEl = document.getElementById('lastSavedTime');
@@ -1891,30 +1848,40 @@ function doPost(e) {
         const totalQty = detailedItems.reduce((acc, x) => acc + x.qty, 0);
         const grossSales = detailedItems.reduce((acc, x) => acc + x.lineGross, 0);
         const netBase = Math.max(0, grossSales - voucher);
-        const buyerShipVND = Math.max(0, Number(so.buyerShipVND) || 0);
-        const estShipVND = Math.max(0, Number(so.estShipVND) || 0);
-        const netShippingVND = buyerShipVND - estShipVND;
-        const vasFeeVND = Number(so.vasFeeVND) || 0;
-
-        // Shopee formula: Phí xử lý GD tính trên (Tiền SP sau voucher + Phí VC người mua trả)
-        const txFee = (netBase + buyerShipVND) * ((Number(so.txFeePct) || 0) / 100);
-        const fixedFee = netBase * ((Number(so.fixedFeePct) || 0) / 100);
-        const servicePctFee = netBase * ((Number(so.serviceFeePct) || 0) / 100);
-        const infraFee = orderCount * (Number(so.infraFeePerOrder) || 0);
-        const serviceFee = servicePctFee + infraFee;
-
-        // Backward compatible with older saved orders that only had taxPct
-        const hasSplitTax = so.vatPct !== undefined || so.pitPct !== undefined;
-        const vatPct = hasSplitTax ? (Number(so.vatPct) || 0) : (Number(so.taxPct) || 0);
-        const pitPct = hasSplitTax ? (Number(so.pitPct) || 0) : 0;
-        const vatAmt = netBase * (vatPct / 100);
-        const pitAmt = netBase * (pitPct / 100);
-        const taxAmt = vatAmt + pitAmt;
-
-        const subsidyVND = Number(so.subsidyVND) || 0;
         const otherFee = orderCount * (Number(so.otherFeePerOrder) || 0);
+
+        let netShippingVND = 0;
+        let txFee = 0;
+        let fixedFee = 0;
+        let serviceFee = 0;
+        let infraFee = 0;
+        let taxAmt = 0;
+        let vasFeeVND = Number(so.vasFeeVND) || 0;
+        let adjustmentVND = 0;
+
+        if (so.feeMode === 'direct') {
+          netShippingVND = Number(so.shippingNoSubsidyVND) || 0;
+          txFee = Math.max(0, Number(so.txFeeVND) || 0);
+          taxAmt = Math.max(0, Number(so.taxVND) || 0);
+          adjustmentVND = Number(so.adjustmentVND) || 0;
+        } else {
+          const buyerShipVND = Math.max(0, Number(so.buyerShipVND) || 0);
+          const estShipVND = Math.max(0, Number(so.estShipVND) || 0);
+          netShippingVND = buyerShipVND - estShipVND;
+          txFee = (netBase + buyerShipVND) * ((Number(so.txFeePct) || 0) / 100);
+          fixedFee = netBase * ((Number(so.fixedFeePct) || 0) / 100);
+          const servicePctFee = netBase * ((Number(so.serviceFeePct) || 0) / 100);
+          infraFee = orderCount * (Number(so.infraFeePerOrder) || 0);
+          serviceFee = servicePctFee + infraFee;
+          const hasSplitTax = so.vatPct !== undefined || so.pitPct !== undefined;
+          const vatPct = hasSplitTax ? (Number(so.vatPct) || 0) : (Number(so.taxPct) || 0);
+          const pitPct = hasSplitTax ? (Number(so.pitPct) || 0) : 0;
+          taxAmt = netBase * (vatPct / 100) + netBase * (pitPct / 100);
+          adjustmentVND = Number(so.subsidyVND) || 0;
+        }
+
         const totalFees = txFee + fixedFee + serviceFee + taxAmt + otherFee;
-        const netRevenue = netBase + netShippingVND + vasFeeVND + subsidyVND - totalFees;
+        const netRevenue = netBase + netShippingVND + vasFeeVND + adjustmentVND - totalFees;
         const cogs = detailedItems.reduce((acc, x) => acc + x.lineCogs, 0);
         const profit = netRevenue - cogs;
 
@@ -1963,6 +1930,9 @@ function doPost(e) {
           displaySkuName,
           grossSales,
           netBase,
+          netShippingVND,
+          vasFeeVND,
+          adjustmentVND,
           txFee,
           fixedFee,
           serviceFee,
@@ -2297,7 +2267,7 @@ function doPost(e) {
       row.innerHTML = `
         <select required class="col-span-12 sm:col-span-5 px-2.5 py-1.5 text-xs sm:text-sm border border-slate-300 rounded-lg bg-white sh-item-sku focus:ring-2 focus:ring-orange-500 focus:outline-none"></select>
         <input type="number" required min="1" step="1" value="${qtyVal}" placeholder="SL" class="col-span-4 sm:col-span-2 px-2 py-1.5 text-xs sm:text-sm border border-slate-300 rounded-lg num text-right sh-item-qty focus:ring-2 focus:ring-orange-500 focus:outline-none" />
-        <input type="number" required min="0" step="1000" value="${priceVal}" placeholder="Giá ₫" class="col-span-4 sm:col-span-2 px-2 py-1.5 text-xs sm:text-sm border border-slate-300 rounded-lg num text-right sh-item-price focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+        <input type="number" required min="0" step="500" value="${priceVal}" placeholder="Giá ₫" class="col-span-4 sm:col-span-2 px-2 py-1.5 text-xs sm:text-sm border border-slate-300 rounded-lg num text-right sh-item-price focus:ring-2 focus:ring-orange-500 focus:outline-none" />
         <span class="col-span-3 sm:col-span-2 text-right text-xs font-semibold text-slate-700 num sh-item-sub">0 ₫</span>
         <button type="button" class="col-span-1 text-slate-400 hover:text-rose-600 flex justify-center btn-remove-sh-item" title="Xóa sản phẩm">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -2384,7 +2354,7 @@ function doPost(e) {
           <td class="py-3 px-4 space-y-0.5 align-top">
             ${itemsHtml}
             ${o.voucherVND > 0 ? `<div class="text-[11px] text-rose-500 num">Voucher shop: -${fmtVND(o.voucherVND)}</div>` : ''}
-            ${(Number(o.subsidyVND) || 0) !== 0 ? `<div class="text-[11px] num ${Number(o.subsidyVND) > 0 ? 'text-emerald-600' : 'text-rose-500'}">Trợ giá: ${Number(o.subsidyVND) > 0 ? '+' : ''}${fmtVND(o.subsidyVND)}</div>` : ''}
+            ${(Number(o.adjustmentVND) || 0) !== 0 ? `<div class="text-[11px] num ${Number(o.adjustmentVND) > 0 ? 'text-emerald-600' : 'text-rose-500'}">Điều chỉnh: ${Number(o.adjustmentVND) > 0 ? '+' : ''}${fmtVND(o.adjustmentVND)}</div>` : ''}
           </td>
           <td class="py-3 px-3 text-right whitespace-nowrap num align-top">
             <span class="font-semibold text-slate-800">${o.orderCount} đơn</span>
@@ -2414,18 +2384,12 @@ function doPost(e) {
       const orderCount = Math.max(1, Number(document.getElementById('shOrderCount').value) || 1);
       const voucher = Math.max(0, Number(document.getElementById('shVoucher').value) || 0);
 
-      const buyerShip = Math.max(0, Number(document.getElementById('shBuyerShip').value) || 0);
-      const estShip = Math.max(0, Number(document.getElementById('shEstShip').value) || 0);
+      const shipNoSubsidy = Number(document.getElementById('shShipNoSubsidy').value) || 0;
+      const txFeeVnd = Math.max(0, Number(document.getElementById('shTxFeeVnd').value) || 0);
+      const taxVnd = Math.max(0, Number(document.getElementById('shTaxVnd').value) || 0);
       const vasFee = Number(document.getElementById('shVasFee').value) || 0;
-      const txPct = Math.max(0, Number(document.getElementById('shTxFee').value) || 0);
-      const fixedPct = Math.max(0, Number(document.getElementById('shFixedFee').value) || 0);
-      const servicePct = Math.max(0, Number(document.getElementById('shServiceFee').value) || 0);
-      const vatPct = Math.max(0, Number(document.getElementById('shVatPct').value) || 0);
-      const pitPct = Math.max(0, Number(document.getElementById('shPitPct').value) || 0);
-      const infraFee = Math.max(0, Number(document.getElementById('shInfraFee').value) || 0);
+      const adjustmentVal = Number(document.getElementById('shAdjustment').value) || 0;
       const otherFee = Math.max(0, Number(document.getElementById('shOtherFee').value) || 0);
-      const subsidySign = Number(document.getElementById('btnShSubsidySign')?.dataset.sign) === -1 ? -1 : 1;
-      const subsidyVal = subsidySign * Math.max(0, Number(document.getElementById('shSubsidy')?.value) || 0);
 
       const rows = document.querySelectorAll('.shopee-item-row');
       let grossSales = 0;
@@ -2476,42 +2440,24 @@ function doPost(e) {
       }
 
       const netBase = Math.max(0, grossSales - voucher);
-      const netShipping = buyerShip - estShip;
-      const fixedAmt = netBase * (fixedPct / 100);
-      const servicePctAmt = netBase * (servicePct / 100);
-      const infraTotal = orderCount * infraFee;
-      const txAmt = (netBase + buyerShip) * (txPct / 100);
-      const platformFee = fixedAmt + servicePctAmt + infraTotal + txAmt;
-
-      const vatAmt = netBase * (vatPct / 100);
-      const pitAmt = netBase * (pitPct / 100);
-      const taxAmt = vatAmt + pitAmt;
-
       const otherTotal = orderCount * otherFee;
-      const totalFees = platformFee + taxAmt + otherTotal;
-      const netRev = netBase + netShipping + vasFee + subsidyVal - totalFees;
+      const shopeeRevenueAfterAdj = netBase + shipNoSubsidy + vasFee + adjustmentVal - txFeeVnd - taxVnd;
+      const netRev = shopeeRevenueAfterAdj - otherTotal;
       const profit = netRev - cogs;
       const margin = netBase > 0 ? (profit / netBase) * 100 : 0;
 
-      // Update live VND readouts next to every % input
-      document.getElementById('shFixedFeeAmt').textContent = fixedAmt > 0 ? `-${fmtVND(fixedAmt)}` : '0 ₫';
-      document.getElementById('shServiceFeeAmt').textContent = servicePctAmt > 0 ? `-${fmtVND(servicePctAmt)}` : '0 ₫';
-      document.getElementById('shTxFeeAmt').textContent = txAmt > 0 ? `-${fmtVND(txAmt)}` : '0 ₫';
-      document.getElementById('shVatAmt').textContent = vatAmt > 0 ? `-${fmtVND(vatAmt)}` : '0 ₫';
-      document.getElementById('shPitAmt').textContent = pitAmt > 0 ? `-${fmtVND(pitAmt)}` : '0 ₫';
-
       document.getElementById('prevGross').textContent = fmtVND(netBase);
-      document.getElementById('prevShippingNet').textContent = `${netShipping >= 0 ? '+' : ''}${fmtVND(netShipping)}`;
-      document.getElementById('prevPlatformFee').textContent = `-${fmtVND(platformFee)}`;
-      document.getElementById('prevTax').textContent = `-${fmtVND(taxAmt)}`;
-      const subPrevEl = document.getElementById('prevSubsidy');
-      if (subPrevEl) {
-        subPrevEl.textContent = subsidyVal === 0 ? '0 ₫' : `${subsidyVal > 0 ? '+' : ''}${fmtVND(subsidyVal)}`;
-        subPrevEl.className = `num ${subsidyVal > 0 ? 'text-emerald-300' : subsidyVal < 0 ? 'text-rose-300' : 'text-slate-300'}`;
+      document.getElementById('prevShippingNet').textContent = shipNoSubsidy === 0 ? '0 ₫' : `${shipNoSubsidy > 0 ? '+' : ''}${fmtVND(shipNoSubsidy)}`;
+      document.getElementById('prevPlatformFee').textContent = txFeeVnd > 0 ? `-${fmtVND(txFeeVnd)}` : '0 ₫';
+      document.getElementById('prevTax').textContent = taxVnd > 0 ? `-${fmtVND(taxVnd)}` : '0 ₫';
+      document.getElementById('prevVas').textContent = vasFee === 0 ? '0 ₫' : `${vasFee > 0 ? '+' : ''}${fmtVND(vasFee)}`;
+      const adjEl = document.getElementById('prevAdjustment');
+      if (adjEl) {
+        adjEl.textContent = adjustmentVal === 0 ? '0 ₫' : `${adjustmentVal > 0 ? '+' : ''}${fmtVND(adjustmentVal)}`;
+        adjEl.className = `num ${adjustmentVal > 0 ? 'text-emerald-300' : adjustmentVal < 0 ? 'text-rose-300' : 'text-slate-300'}`;
       }
-      const extraNet = vasFee - otherTotal;
-      document.getElementById('prevFixedPerOrder').textContent = `${extraNet > 0 ? '+' : ''}${fmtVND(extraNet)}`;
-      document.getElementById('prevNetRev').textContent = fmtVND(netRev);
+      document.getElementById('prevNetRev').textContent = fmtVND(shopeeRevenueAfterAdj);
+      document.getElementById('prevOtherCost').textContent = otherTotal > 0 ? `-${fmtVND(otherTotal)}` : '0 ₫';
       document.getElementById('prevCogs').textContent = `-${fmtVND(cogs)}`;
 
       const profitEl = document.getElementById('prevProfit');
@@ -2587,7 +2533,7 @@ function doPost(e) {
             </td>
             <td class="py-3 px-3 text-right whitespace-nowrap num font-medium text-slate-800">${fmtVND(sk.avgUnitCostVND)}</td>
             <td class="py-2 px-3 text-right whitespace-nowrap">
-              <input type="number" min="0" step="1000" value="${Number(state.skuSellingPrices[sk.name]) > 0 ? state.skuSellingPrices[sk.name] : ''}" placeholder="Chưa kê khai" data-set-price="${escapeHtml(sk.name)}" class="w-28 text-right bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 focus:border-orange-400 rounded-lg px-2 py-1 text-xs font-semibold text-orange-700 num focus:outline-none" title="Kê khai giá bán cố định (₫) cho sản phẩm này" />
+              <input type="number" min="0" step="500" value="${Number(state.skuSellingPrices[sk.name]) > 0 ? state.skuSellingPrices[sk.name] : ''}" placeholder="Chưa kê khai" data-set-price="${escapeHtml(sk.name)}" class="w-28 text-right bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 focus:border-orange-400 rounded-lg px-2 py-1 text-xs font-semibold text-orange-700 num focus:outline-none" title="Kê khai giá bán cố định (₫) cho sản phẩm này" />
             </td>
             <td class="py-3 px-3 text-right whitespace-nowrap num text-slate-700">${fmtVND(sk.inventoryValueVND)}</td>
             <td class="py-3 px-3 text-right whitespace-nowrap num font-bold ${sk.profitVND >= 0 ? 'text-emerald-600' : 'text-rose-600'}">${fmtVND(sk.profitVND)}</td>
@@ -3019,14 +2965,25 @@ function doPost(e) {
       }
     }
 
-    function applyDefaultFeesToForm() {
-      document.getElementById('shTxFee').value = state.defaultFees.txFeePct;
-      document.getElementById('shFixedFee').value = state.defaultFees.fixedFeePct;
-      document.getElementById('shServiceFee').value = state.defaultFees.serviceFeePct;
-      document.getElementById('shVatPct').value = state.defaultFees.vatPct;
-      document.getElementById('shPitPct').value = state.defaultFees.pitPct;
-      document.getElementById('shInfraFee').value = state.defaultFees.infraFeePerOrder;
-      document.getElementById('shOtherFee').value = state.defaultFees.otherFeePerOrder;
+    function applyDefaultFeesToForm(autoEstimate = false) {
+      const orderCount = Math.max(1, Number(document.getElementById('shOrderCount')?.value) || 1);
+      const voucher = Math.max(0, Number(document.getElementById('shVoucher')?.value) || 0);
+      let grossSales = 0;
+      document.querySelectorAll('.shopee-item-row').forEach((r) => {
+        const qty = Math.max(1, Number(r.querySelector('.sh-item-qty')?.value) || 1);
+        const price = Math.max(0, Number(r.querySelector('.sh-item-price')?.value) || 0);
+        grossSales += qty * price;
+      });
+      const netBase = Math.max(0, grossSales - voucher);
+      if (autoEstimate) {
+        const txPctSum = (state.defaultFees.txFeePct || 0) + (state.defaultFees.fixedFeePct || 0) + (state.defaultFees.serviceFeePct || 0);
+        const estTxFee = Math.round(netBase * (txPctSum / 100) + orderCount * (state.defaultFees.infraFeePerOrder || 0));
+        const taxPctSum = (state.defaultFees.vatPct || 0) + (state.defaultFees.pitPct || 0);
+        const estTax = Math.round(netBase * (taxPctSum / 100));
+        document.getElementById('shTxFeeVnd').value = estTxFee;
+        document.getElementById('shTaxVnd').value = estTax;
+      }
+      document.getElementById('shOtherFee').value = state.defaultFees.otherFeePerOrder || 0;
       updateShopeeLivePreview();
     }
 
@@ -3713,31 +3670,18 @@ function doPost(e) {
       });
 
       document.getElementById('btnApplyDefaultFees').addEventListener('click', () => {
-        applyDefaultFeesToForm();
-        showToast('Đã áp dụng biểu phí mặc định vào form nhập đơn');
+        applyDefaultFeesToForm(true);
+        showToast('Đã tự tính Phí giao dịch & Thuế từ biểu phí mặc định');
+      });
+      document.getElementById('btnAutoEstimateFees').addEventListener('click', () => {
+        applyDefaultFeesToForm(true);
+        showToast('Đã tự ước tính Phí giao dịch & Thuế cho đơn hiện tại');
       });
 
       // Multi-item Shopee form controls & live preview
       document.getElementById('btnAddShopeeItemRow').addEventListener('click', () => addShopeeItemRow(null));
 
-      function setSubsidySign(sign) {
-        const btn = document.getElementById('btnShSubsidySign');
-        if (!btn) return;
-        const isPos = Number(sign) !== -1;
-        btn.dataset.sign = isPos ? '1' : '-1';
-        btn.textContent = isPos ? '+ Cộng' : '− Trừ';
-        btn.className = isPos
-          ? 'px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition'
-          : 'px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 transition';
-      }
-
-      document.getElementById('btnShSubsidySign').addEventListener('click', () => {
-        const cur = Number(document.getElementById('btnShSubsidySign').dataset.sign) === -1 ? -1 : 1;
-        setSubsidySign(cur === 1 ? -1 : 1);
-        updateShopeeLivePreview();
-      });
-
-      ['shOrderCount', 'shVoucher', 'shBuyerShip', 'shEstShip', 'shVasFee', 'shTxFee', 'shFixedFee', 'shServiceFee', 'shVatPct', 'shPitPct', 'shInfraFee', 'shSubsidy', 'shOtherFee'].forEach(id => {
+      ['shOrderCount', 'shVoucher', 'shShipNoSubsidy', 'shTxFeeVnd', 'shTaxVnd', 'shVasFee', 'shAdjustment', 'shOtherFee'].forEach(id => {
         document.getElementById(id).addEventListener('input', () => updateShopeeLivePreview());
         document.getElementById(id).addEventListener('change', () => updateShopeeLivePreview());
       });
@@ -3789,24 +3733,17 @@ function doPost(e) {
 
         const totalQty = items.reduce((s, it) => s + it.qty, 0);
         const editId = document.getElementById('shEditId').value;
-        const vatVal = Math.max(0, Number(document.getElementById('shVatPct').value) || 0);
-        const pitVal = Math.max(0, Number(document.getElementById('shPitPct').value) || 0);
         const payload = {
+          feeMode: 'direct',
           date: document.getElementById('shDate').value || todayISO(),
           orderCode: document.getElementById('shOrderCode').value.trim(),
           orderCount: Math.max(1, Number(document.getElementById('shOrderCount').value) || 1),
           voucherVND: Math.max(0, Number(document.getElementById('shVoucher').value) || 0),
-          buyerShipVND: Math.max(0, Number(document.getElementById('shBuyerShip').value) || 0),
-          estShipVND: Math.max(0, Number(document.getElementById('shEstShip').value) || 0),
+          shippingNoSubsidyVND: Number(document.getElementById('shShipNoSubsidy').value) || 0,
+          txFeeVND: Math.max(0, Number(document.getElementById('shTxFeeVnd').value) || 0),
+          taxVND: Math.max(0, Number(document.getElementById('shTaxVnd').value) || 0),
           vasFeeVND: Number(document.getElementById('shVasFee').value) || 0,
-          txFeePct: Math.max(0, Number(document.getElementById('shTxFee').value) || 0),
-          fixedFeePct: Math.max(0, Number(document.getElementById('shFixedFee').value) || 0),
-          serviceFeePct: Math.max(0, Number(document.getElementById('shServiceFee').value) || 0),
-          vatPct: vatVal,
-          pitPct: pitVal,
-          taxPct: vatVal + pitVal,
-          infraFeePerOrder: Math.max(0, Number(document.getElementById('shInfraFee').value) || 0),
-          subsidyVND: (Number(document.getElementById('btnShSubsidySign').dataset.sign) === -1 ? -1 : 1) * Math.max(0, Number(document.getElementById('shSubsidy').value) || 0),
+          adjustmentVND: Number(document.getElementById('shAdjustment').value) || 0,
           otherFeePerOrder: Math.max(0, Number(document.getElementById('shOtherFee').value) || 0),
           items
         };
@@ -3836,12 +3773,12 @@ function doPost(e) {
         document.getElementById('shOrderCode').value = '';
         document.getElementById('shOrderCount').value = 1;
         document.getElementById('shVoucher').value = 0;
-        document.getElementById('shBuyerShip').value = 0;
-        document.getElementById('shEstShip').value = 0;
+        document.getElementById('shShipNoSubsidy').value = 0;
+        document.getElementById('shTxFeeVnd').value = 0;
+        document.getElementById('shTaxVnd').value = 0;
         document.getElementById('shVasFee').value = 0;
-        document.getElementById('shSubsidy').value = 0;
-        setSubsidySign(1);
-        applyDefaultFeesToForm();
+        document.getElementById('shAdjustment').value = 0;
+        applyDefaultFeesToForm(false);
         document.getElementById('containerShopeeItems').innerHTML = '';
         addShopeeItemRow(null);
       }
@@ -3866,23 +3803,23 @@ function doPost(e) {
           document.getElementById('shDate').value = ord.date || todayISO();
           document.getElementById('shOrderCode').value = ord.orderCode || '';
           document.getElementById('shOrderCount').value = Math.max(1, Number(ord.orderCount) || 1);
-          document.getElementById('shVoucher').value = Math.max(0, Number(ord.voucherVND) || 0);
-          document.getElementById('shBuyerShip').value = Math.max(0, Number(ord.buyerShipVND) || 0);
-          document.getElementById('shEstShip').value = Math.max(0, Number(ord.estShipVND) || 0);
-          document.getElementById('shVasFee').value = Number(ord.vasFeeVND) || 0;
-          document.getElementById('shTxFee').value = ord.txFeePct ?? state.defaultFees.txFeePct;
-          document.getElementById('shFixedFee').value = ord.fixedFeePct ?? state.defaultFees.fixedFeePct;
-          document.getElementById('shServiceFee').value = ord.serviceFeePct ?? state.defaultFees.serviceFeePct;
-          const hasSplit = ord.vatPct !== undefined || ord.pitPct !== undefined;
-          document.getElementById('shVatPct').value = hasSplit ? (ord.vatPct ?? 0) : (ord.taxPct ?? state.defaultFees.vatPct);
-          document.getElementById('shPitPct').value = hasSplit ? (ord.pitPct ?? 0) : 0;
-          document.getElementById('shInfraFee').value = ord.infraFeePerOrder ?? state.defaultFees.infraFeePerOrder;
-          const savedSub = Number(ord.subsidyVND) || 0;
-          setSubsidySign(savedSub < 0 ? -1 : 1);
-          document.getElementById('shSubsidy').value = Math.abs(savedSub);
-          document.getElementById('shOtherFee').value = ord.otherFeePerOrder ?? state.defaultFees.otherFeePerOrder;
-
           const data = computeAnalytics();
+          const comp = data.computedShopeeOrders.find(x => x.id === ord.id);
+          document.getElementById('shVoucher').value = Math.max(0, Number(ord.voucherVND) || 0);
+          if (ord.feeMode === 'direct') {
+            document.getElementById('shShipNoSubsidy').value = Number(ord.shippingNoSubsidyVND) || 0;
+            document.getElementById('shTxFeeVnd').value = Math.max(0, Number(ord.txFeeVND) || 0);
+            document.getElementById('shTaxVnd').value = Math.max(0, Number(ord.taxVND) || 0);
+            document.getElementById('shVasFee').value = Number(ord.vasFeeVND) || 0;
+            document.getElementById('shAdjustment').value = Number(ord.adjustmentVND) || 0;
+          } else if (comp) {
+            document.getElementById('shShipNoSubsidy').value = Math.round(comp.netShippingVND || 0);
+            document.getElementById('shTxFeeVnd').value = Math.round((comp.txFee || 0) + (comp.fixedFee || 0) + (comp.serviceFee || 0));
+            document.getElementById('shTaxVnd').value = Math.round(comp.taxAmt || 0);
+            document.getElementById('shVasFee').value = Math.round(comp.vasFeeVND || 0);
+            document.getElementById('shAdjustment').value = Math.round(comp.adjustmentVND || 0);
+          }
+          document.getElementById('shOtherFee').value = ord.otherFeePerOrder ?? state.defaultFees.otherFeePerOrder;
           const items = getShopeeOrderItems(ord);
           document.getElementById('containerShopeeItems').innerHTML = '';
           items.forEach((it) => {
